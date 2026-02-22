@@ -1,0 +1,29 @@
+{
+  "testimonials": {
+    "1": {
+      "customerName": "Shreyas Kulkarni",
+      "customerFeedback": "Amazing variety! Found the perfect running shoes at a price I never expected. The staff was incredibly helpful and patient. Will definitely return.",
+      "customerRating": "5/5"
+    },
+    "2": {
+      "customerName": "Ramesh Ajua",
+      "customerFeedback": "Simran Shoes has been my family's go-to store for years. Quality products, honest pricing, and a great shopping experience every single time.",
+      "customerRating": "5/5"
+    },
+    "3": {
+      "customerName": "Priya Sharma",
+      "customerFeedback": "Loved the collection of traditional footwear. Got beautiful juttis for my sister's wedding. Excellent quality and very affordable.",
+      "customerRating": "4/5"
+    },
+    "4": {
+      "customerName": "Vikas Tiwari",
+      "customerFeedback": "Best footwear store in Jabalpur without a doubt. They have everything from school shoes to formal wear. Trustworthy place to shop.",
+      "customerRating": "5/5"
+    },
+    "5": {
+      "customerName": "Anita Patel",
+      "customerFeedback": "Great selection of sandals and chappals. WhatsApp ordering was super convenient — placed my order from home and it was ready in hours!",
+      "customerRating": "4/5"
+    }
+  }
+}

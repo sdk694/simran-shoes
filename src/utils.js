@@ -1,12 +1,12 @@
 /**
- * SIMRAN SHOES — Shared Utilities
+ * SIMRAN SHOES v3 — Shared Utilities
  * Loaded before all component scripts
  */
 
 'use strict';
 
-// ─── Config paths ────────────────────────────────────────────
-const CONFIG_BASE = 'env/config/';
+// ─── Config paths (migrated to public/config/) ───────────────
+const CONFIG_BASE = 'public/config/';
 const ASSETS_BASE = 'assets/';
 
 const CONFIGS = {
@@ -16,7 +16,7 @@ const CONFIGS = {
   testimonials: CONFIG_BASE + 'testimonials.json',
 };
 
-// Global store for WhatsApp number (set after about.json loads)
+// Global WhatsApp number — set by AboutComponent.init()
 window._waNumber = '';
 
 // ─── Fetch helper ────────────────────────────────────────────
@@ -42,7 +42,7 @@ function sanitize(str) {
 // ─── WhatsApp URL builder ────────────────────────────────────
 function whatsappURL(number, productName, productPrice) {
   const msg = encodeURIComponent(
-    `Hi, I'm interested in ${productName} priced at ₹${productPrice}`
+    `Hi, I'm interested in ${productName} priced at ₹${productPrice}. Is it available?`
   );
   return `https://wa.me/${number}?text=${msg}`;
 }
@@ -54,14 +54,17 @@ function amazonURL(productName) {
 }
 
 // ─── Star rating renderer ────────────────────────────────────
-function renderStars(ratingStr) {
-  const parts = String(ratingStr || '5/5').split('/');
-  const filled = parseInt(parts[0]) || 5;
-  const total  = parseInt(parts[1]) || 5;
-  let html = '';
-  for (let i = 1; i <= total; i++) {
-    html += `<span class="star ${i <= filled ? 'filled' : ''}" aria-hidden="true">★</span>`;
-  }
+function renderStars(rating, showNumber = true) {
+  const num    = parseFloat(rating) || 0;
+  const full   = Math.floor(num);
+  const half   = num % 1 >= 0.5;
+  const empty  = 5 - full - (half ? 1 : 0);
+  let html = '<span class="stars-wrap" aria-hidden="true">';
+  for (let i = 0; i < full;  i++) html += '<span class="star full">★</span>';
+  if (half)                        html += '<span class="star half">★</span>';
+  for (let i = 0; i < empty; i++) html += '<span class="star empty">★</span>';
+  html += '</span>';
+  if (showNumber && num > 0) html += `<span class="rating-num">${num.toFixed(1)}</span>`;
   return html;
 }
 
@@ -73,6 +76,20 @@ function calcDiscount(original, sale) {
   return Math.round(((orig - curr) / orig) * 100);
 }
 
+// ─── Tag badge renderer ──────────────────────────────────────
+function renderTags(tags = []) {
+  if (!tags || tags.length === 0) return '';
+  const map = {
+    bestseller: { label: 'Bestseller', cls: 'tag-bestseller' },
+    new:        { label: 'New',        cls: 'tag-new' },
+    deal:       { label: 'Deal',       cls: 'tag-deal' },
+  };
+  return tags.map(t => {
+    const cfg = map[t] || { label: t, cls: 'tag-default' };
+    return `<span class="product-tag ${cfg.cls}">${cfg.label}</span>`;
+  }).join('');
+}
+
 // ─── WhatsApp SVG icon ───────────────────────────────────────
 function whatsappIconSVG(size = 16) {
   return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -81,113 +98,154 @@ function whatsappIconSVG(size = 16) {
   </svg>`;
 }
 
-// ─── Amazon SVG icon ─────────────────────────────────────────
-function amazonIconSVG(size = 16) {
-  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M13.958 10.09c0 1.232.029 2.256-.591 3.351-.502.891-1.301 1.438-2.186 1.438-1.214 0-1.922-.924-1.922-2.292 0-2.692 2.415-3.182 4.699-3.182v.685zm3.186 7.705c-.209.189-.512.201-.745.074-1.047-.872-1.234-1.276-1.814-2.106-1.734 1.767-2.962 2.297-5.209 2.297-2.66 0-4.731-1.641-4.731-4.925 0-2.565 1.391-4.309 3.37-5.164 1.715-.754 4.11-.891 5.942-1.099v-.41c0-.753.06-1.642-.384-2.294-.385-.579-1.124-.819-1.776-.819-1.205 0-2.277.618-2.541 1.897-.054.285-.261.567-.549.582l-3.061-.333c-.259-.056-.548-.266-.472-.66.705-3.716 4.06-4.836 7.065-4.836 1.537 0 3.544.41 4.756 1.574 1.537 1.437 1.389 3.353 1.389 5.443v4.925c0 1.48.616 2.13 1.194 2.929.204.287.249.631-.009.845l-2.416 2.08h.001z"/>
-    <path d="M20.16 17.928c-2.184 1.637-5.352 2.508-8.08 2.508-3.823 0-7.268-1.414-9.876-3.762-.205-.185-.021-.438.224-.295 2.812 1.636 6.292 2.619 9.883 2.619 2.423 0 5.088-.502 7.543-1.543.37-.158.681.242.306.473z"/>
-    <path d="M21.069 16.899c-.279-.358-1.845-.169-2.549-.085-.214.025-.247-.161-.054-.296 1.249-.878 3.297-.625 3.535-.331.238.295-.063 2.344-1.235 3.322-.18.151-.351.07-.271-.128.264-.659.854-2.124.574-2.482z"/>
-  </svg>`;
-}
-
-// ─── Product card builder (shared across flashsale & categories) ──
-function buildProductCard(product, imgBasePath, waNumber, options = {}) {
-  const { isFlash = false } = options;
-  const name          = sanitize(product.productName  || '');
-  const price         = sanitize(String(product.productPrice || ''));
-  const imgNum        = sanitize(String(product.productImageNumber || '1'));
-  const originalPrice = sanitize(String(product.originalPrice || ''));
-  const discount      = originalPrice ? calcDiscount(originalPrice, price) : null;
-
-  const card = document.createElement('article');
-  card.className = 'product-card';
-  card.setAttribute('role', 'listitem');
-
-  // ── Image wrapper
-  const imgWrap = document.createElement('div');
-  imgWrap.className = 'product-image-wrap';
-
-  const imgPath = `${imgBasePath}${imgNum}`;
-  const img     = document.createElement('img');
-  img.alt       = name;
-  img.loading   = 'lazy';
-  img.decoding  = 'async';
+// ─── Image loader with multi-extension fallback ───────────────
+function loadProductImage(imgPath, altText, onFail) {
+  const img  = document.createElement('img');
+  img.alt    = sanitize(altText);
+  img.loading = 'lazy';
+  img.decoding = 'async';
   img.style.cssText = 'width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;';
 
   const exts  = ['jpg', 'png', 'webp', 'jpeg', 'svg'];
   let extIdx  = 0;
 
   function tryNext() {
-    if (extIdx >= exts.length) {
-      imgWrap.innerHTML = `
-        <div class="product-image-placeholder">
-          <span class="placeholder-icon">👟</span>
-          <span>Image coming soon</span>
-        </div>`;
-      return;
-    }
+    if (extIdx >= exts.length) { if (onFail) onFail(); return; }
     img.src = `${imgPath}.${exts[extIdx++]}`;
   }
-
   img.onerror = tryNext;
   tryNext();
+  return img;
+}
+
+// ─── Enhanced Product Card Builder (v3) ──────────────────────
+function buildProductCard(product, imgBasePath, waNumber, options = {}) {
+  const { isFlash = false, onQuickView = null } = options;
+
+  const name     = sanitize(product.productName  || '');
+  const brand    = sanitize(product.brand         || '');
+  const price    = sanitize(String(product.productPrice || product.price || ''));
+  const imgNum   = sanitize(String(product.productImageNumber || '1'));
+  const origPrice = sanitize(String(product.originalPrice || ''));
+  const discount  = origPrice ? calcDiscount(origPrice, price) : null;
+  const rating    = product.rating || 0;
+  const tags      = product.tags  || [];
+  const avail     = product.availability !== false;
+  const imgPath   = `${imgBasePath}${imgNum}`;
+
+  const card = document.createElement('article');
+  card.className = 'product-card';
+  card.setAttribute('role', 'listitem');
+  if (!avail) card.classList.add('out-of-stock');
+
+  // ── Image wrapper
+  const imgWrap = document.createElement('div');
+  imgWrap.className = 'product-image-wrap';
+
+  const img = loadProductImage(imgPath, name, () => {
+    imgWrap.innerHTML = `
+      <div class="product-image-placeholder">
+        <span class="placeholder-icon">👟</span>
+        <span>Image coming soon</span>
+      </div>`;
+  });
   imgWrap.appendChild(img);
 
-  if (isFlash) {
+  // Tags overlay
+  if (tags.length > 0) {
+    const tagWrap = document.createElement('div');
+    tagWrap.className = 'product-tags-overlay';
+    tagWrap.innerHTML = renderTags(tags);
+    imgWrap.appendChild(tagWrap);
+  }
+
+  if (isFlash && discount) {
     const badge = document.createElement('div');
     badge.className   = 'flash-badge';
-    badge.textContent = '⚡ Sale';
+    badge.textContent = `${discount}% OFF`;
     imgWrap.appendChild(badge);
+  }
+
+  // Quick View button (desktop hover)
+  const qvBtn = document.createElement('button');
+  qvBtn.className   = 'quick-view-btn';
+  qvBtn.textContent = 'Quick View';
+  qvBtn.setAttribute('aria-label', `Quick view ${name}`);
+  qvBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (onQuickView) onQuickView(product, imgPath);
+  });
+  imgWrap.appendChild(qvBtn);
+
+  // Out of stock overlay
+  if (!avail) {
+    const oos = document.createElement('div');
+    oos.className   = 'oos-overlay';
+    oos.textContent = 'Out of Stock';
+    imgWrap.appendChild(oos);
   }
 
   // ── Card body
   const body = document.createElement('div');
   body.className = 'product-body';
 
+  // Brand
+  if (brand) {
+    const brandEl = document.createElement('p');
+    brandEl.className   = 'product-brand';
+    brandEl.textContent = brand;
+    body.appendChild(brandEl);
+  }
+
+  // Name
   const nameEl = document.createElement('h3');
   nameEl.className   = 'product-name';
   nameEl.textContent = name;
+  body.appendChild(nameEl);
 
+  // Rating
+  if (rating > 0) {
+    const ratingEl = document.createElement('div');
+    ratingEl.className = 'product-rating';
+    ratingEl.innerHTML = renderStars(rating);
+    body.appendChild(ratingEl);
+  }
+
+  // Pricing
   const pricingEl = document.createElement('div');
   pricingEl.className = 'product-pricing';
   pricingEl.innerHTML = `<span class="product-price">₹${price}</span>`;
-  if (originalPrice && discount) {
+  if (origPrice && discount) {
     pricingEl.innerHTML += `
-      <span class="product-original-price">₹${originalPrice}</span>
+      <span class="product-original-price">₹${origPrice}</span>
       <span class="product-discount">${discount}% off</span>`;
   }
+  body.appendChild(pricingEl);
 
-  // ── Action buttons wrapper
+  // Actions
   const actions = document.createElement('div');
   actions.className = 'product-actions';
 
-  // WhatsApp button
   const waBtn = document.createElement('a');
-  waBtn.className  = 'whatsapp-btn-product';
-  waBtn.href       = whatsappURL(waNumber, name, price);
-  waBtn.target     = '_blank';
-  waBtn.rel        = 'noopener noreferrer';
+  waBtn.className = 'whatsapp-btn-product';
+  waBtn.href      = whatsappURL(waNumber, name, price);
+  waBtn.target    = '_blank';
+  waBtn.rel       = 'noopener noreferrer';
   waBtn.setAttribute('aria-label', `Buy ${name} on WhatsApp`);
-  waBtn.innerHTML  = `${whatsappIconSVG()} Buy on WhatsApp`;
-
-  // Amazon button
-  const amzBtn = document.createElement('a');
-  amzBtn.className = 'amazon-btn-product';
-  amzBtn.href      = amazonURL(name);
-  amzBtn.target    = '_blank';
-  amzBtn.rel       = 'noopener noreferrer';
-  amzBtn.setAttribute('aria-label', `Search ${name} on Amazon`);
-  amzBtn.innerHTML = `${amazonIconSVG()} Buy on Amazon`;
-
+  waBtn.innerHTML = `${whatsappIconSVG()} Buy on WhatsApp`;
+  if (!avail) waBtn.classList.add('disabled');
   actions.appendChild(waBtn);
-  actions.appendChild(amzBtn);
 
-  body.appendChild(nameEl);
-  body.appendChild(pricingEl);
   body.appendChild(actions);
-
   card.appendChild(imgWrap);
   card.appendChild(body);
+
+  // Mobile: tap card to open Quick View
+  card.addEventListener('click', (e) => {
+    if (window.innerWidth <= 768 && onQuickView && !e.target.closest('a')) {
+      onQuickView(product, imgPath);
+    }
+  });
 
   return card;
 }
