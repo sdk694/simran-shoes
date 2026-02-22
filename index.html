@@ -34,59 +34,52 @@
   }
   </script>
 
-  <!-- Global styles -->
   <link rel="stylesheet" href="src/global.css" />
-
-  <!-- Component styles -->
   <link rel="stylesheet" href="components/navbar/navbar.css" />
   <link rel="stylesheet" href="components/hero/hero.css" />
   <link rel="stylesheet" href="components/about/about.css" />
   <link rel="stylesheet" href="components/flashsale/flashsale.css" />
   <link rel="stylesheet" href="components/categories/categories.css" />
+  <link rel="stylesheet" href="components/modal/modal.css" />
   <link rel="stylesheet" href="components/testimonials/testimonials.css" />
   <link rel="stylesheet" href="components/footer/footer.css" />
 </head>
 <body>
 
-  <!-- NAVBAR -->
   <div id="navbar-root"></div>
 
   <main id="home">
-    <!-- HERO -->
     <div id="hero-root"></div>
-
-    <!-- ABOUT -->
     <div id="about-root"></div>
-
-    <!-- FLASH SALE -->
     <div id="flashsale-root"></div>
-
-    <!-- CATEGORIES -->
     <div id="categories-root"></div>
-
-    <!-- TESTIMONIALS -->
     <div id="testimonials-root"></div>
   </main>
 
-  <!-- FOOTER -->
   <div id="footer-root"></div>
+  <div id="modal-root"></div>
 
-  <!-- Back to top -->
+  <!-- Sticky WhatsApp CTA — mobile only -->
+  <a id="sticky-wa" href="#" target="_blank" rel="noopener noreferrer"
+     class="sticky-wa" aria-label="Chat on WhatsApp">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.558 4.112 1.529 5.836L.038 23.485a.5.5 0 0 0 .65.65l5.524-1.557A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.013-1.374l-.36-.214-3.727 1.05 1.002-3.667-.234-.376A9.818 9.818 0 1 1 12 21.818z"/>
+    </svg>
+    <span>Chat with us</span>
+  </a>
+
   <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
 
-  <!-- Shared utilities (must load first) -->
   <script src="src/utils.js"></script>
-
-  <!-- Component scripts -->
   <script src="components/navbar/navbar.js"></script>
   <script src="components/hero/hero.js"></script>
   <script src="components/about/about.js"></script>
   <script src="components/flashsale/flashsale.js"></script>
+  <script src="components/modal/modal.js"></script>
   <script src="components/categories/categories.js"></script>
   <script src="components/testimonials/testimonials.js"></script>
   <script src="components/footer/footer.js"></script>
-
-  <!-- App bootstrap -->
   <script src="src/app.js"></script>
 
 </body>

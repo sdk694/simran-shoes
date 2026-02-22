@@ -1,0 +1,49 @@
+{
+  "hoursLeft": 18,
+  "flashsale": {
+    "1": {
+      "productId": "FS001",
+      "productName": "Campus Running Shoes",
+      "brand": "Campus",
+      "productPrice": "599",
+      "originalPrice": "999",
+      "rating": 4.3,
+      "tags": ["bestseller"],
+      "availability": true,
+      "productImageNumber": "1"
+    },
+    "2": {
+      "productId": "FS002",
+      "productName": "Flite Comfort Clogs",
+      "brand": "Flite",
+      "productPrice": "299",
+      "originalPrice": "499",
+      "rating": 4.0,
+      "tags": ["deal"],
+      "availability": true,
+      "productImageNumber": "2"
+    },
+    "3": {
+      "productId": "FS003",
+      "productName": "Liberty Sports Shoes",
+      "brand": "Liberty",
+      "productPrice": "799",
+      "originalPrice": "1299",
+      "rating": 4.5,
+      "tags": ["new"],
+      "availability": true,
+      "productImageNumber": "3"
+    },
+    "4": {
+      "productId": "FS004",
+      "productName": "Bata Leather Sandals",
+      "brand": "Bata",
+      "productPrice": "449",
+      "originalPrice": "699",
+      "rating": 4.1,
+      "tags": ["deal"],
+      "availability": true,
+      "productImageNumber": "4"
+    }
+  }
+}

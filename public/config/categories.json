@@ -1,0 +1,229 @@
+{
+  "shoes": {
+    "1": {
+      "productId": "SH001",
+      "productName": "Campus Neo Running Shoes",
+      "brand": "Campus",
+      "productPrice": "699",
+      "rating": 4.4,
+      "tags": ["bestseller"],
+      "availability": true,
+      "popularityScore": 92,
+      "productImageNumber": "1"
+    },
+    "2": {
+      "productId": "SH002",
+      "productName": "Liberty Force 10 Sneakers",
+      "brand": "Liberty",
+      "productPrice": "849",
+      "rating": 4.2,
+      "tags": ["new"],
+      "availability": true,
+      "popularityScore": 78,
+      "productImageNumber": "2"
+    },
+    "3": {
+      "productId": "SH003",
+      "productName": "Bata Power Sports Shoes",
+      "brand": "Bata",
+      "productPrice": "999",
+      "rating": 4.5,
+      "tags": ["bestseller"],
+      "availability": true,
+      "popularityScore": 88,
+      "productImageNumber": "3"
+    }
+  },
+  "sandals": {
+    "1": {
+      "productId": "SA001",
+      "productName": "Flite Casual Sandals",
+      "brand": "Flite",
+      "productPrice": "349",
+      "rating": 4.1,
+      "tags": ["deal"],
+      "availability": true,
+      "popularityScore": 74,
+      "productImageNumber": "1"
+    },
+    "2": {
+      "productId": "SA002",
+      "productName": "Paragon Hawaii Sandals",
+      "brand": "Paragon",
+      "productPrice": "199",
+      "rating": 3.9,
+      "tags": [],
+      "availability": true,
+      "popularityScore": 65,
+      "productImageNumber": "2"
+    }
+  },
+  "traditional": {
+    "1": {
+      "productId": "TR001",
+      "productName": "Punjabi Jutti (Embroidered)",
+      "brand": "Handcrafted",
+      "productPrice": "599",
+      "rating": 4.6,
+      "tags": ["bestseller"],
+      "availability": true,
+      "popularityScore": 80,
+      "productImageNumber": "1"
+    },
+    "2": {
+      "productId": "TR002",
+      "productName": "Kolhapuri Chappal",
+      "brand": "Handcrafted",
+      "productPrice": "449",
+      "rating": 4.3,
+      "tags": ["new"],
+      "availability": true,
+      "popularityScore": 70,
+      "productImageNumber": "2"
+    }
+  },
+  "rainwear": {
+    "1": {
+      "productId": "RW001",
+      "productName": "Bata Rain Boots",
+      "brand": "Bata",
+      "productPrice": "499",
+      "rating": 4.2,
+      "tags": ["bestseller"],
+      "availability": true,
+      "popularityScore": 76,
+      "productImageNumber": "1"
+    },
+    "2": {
+      "productId": "RW002",
+      "productName": "Waterproof Gumboots",
+      "brand": "Generic",
+      "productPrice": "349",
+      "rating": 3.8,
+      "tags": ["deal"],
+      "availability": true,
+      "popularityScore": 60,
+      "productImageNumber": "2"
+    }
+  },
+  "socks": {
+    "1": {
+      "productId": "SO001",
+      "productName": "Cotton Ankle Socks (Pack of 3)",
+      "brand": "Bonjour",
+      "productPrice": "99",
+      "rating": 4.0,
+      "tags": ["bestseller"],
+      "availability": true,
+      "popularityScore": 85,
+      "productImageNumber": "1"
+    },
+    "2": {
+      "productId": "SO002",
+      "productName": "Woolen Winter Socks",
+      "brand": "Bonjour",
+      "productPrice": "149",
+      "rating": 4.2,
+      "tags": ["new"],
+      "availability": true,
+      "popularityScore": 68,
+      "productImageNumber": "2"
+    }
+  },
+  "wallets": {
+    "1": {
+      "productId": "WA001",
+      "productName": "Leather Bifold Wallet",
+      "brand": "Killer",
+      "productPrice": "299",
+      "rating": 4.3,
+      "tags": ["bestseller"],
+      "availability": true,
+      "popularityScore": 77,
+      "productImageNumber": "1"
+    },
+    "2": {
+      "productId": "WA002",
+      "productName": "RFID Slim Card Wallet",
+      "brand": "Wildhorn",
+      "productPrice": "249",
+      "rating": 4.5,
+      "tags": ["new"],
+      "availability": true,
+      "popularityScore": 82,
+      "productImageNumber": "2"
+    }
+  },
+  "belts": {
+    "1": {
+      "productId": "BE001",
+      "productName": "Genuine Leather Belt",
+      "brand": "Killer",
+      "productPrice": "349",
+      "rating": 4.4,
+      "tags": ["bestseller"],
+      "availability": true,
+      "popularityScore": 79,
+      "productImageNumber": "1"
+    },
+    "2": {
+      "productId": "BE002",
+      "productName": "Casual Canvas Belt",
+      "brand": "Pepe",
+      "productPrice": "199",
+      "rating": 3.9,
+      "tags": ["deal"],
+      "availability": true,
+      "popularityScore": 58,
+      "productImageNumber": "2"
+    }
+  },
+  "chappals": {
+    "1": {
+      "productId": "CH001",
+      "productName": "Doctor Slippers",
+      "brand": "Paragon",
+      "productPrice": "249",
+      "rating": 4.5,
+      "tags": ["bestseller"],
+      "availability": true,
+      "popularityScore": 90,
+      "productImageNumber": "1"
+    },
+    "2": {
+      "productId": "CH002",
+      "productName": "VKC Pride Chappals",
+      "brand": "VKC",
+      "productPrice": "199",
+      "rating": 4.1,
+      "tags": [],
+      "availability": true,
+      "popularityScore": 72,
+      "productImageNumber": "2"
+    }
+  },
+  "others": {
+    "1": {
+      "productId": "OT001",
+      "productName": "Shoe Care Kit",
+      "brand": "Kiwi",
+      "productPrice": "149",
+      "rating": 4.0,
+      "tags": ["bestseller"],
+      "availability": true,
+      "popularityScore": 65,
+      "productImageNumber": "1"
+    },
+    "2": {
+      "productId": "OT002",
+      "productName": "Insole Comfort Pads",
+      "brand": "Scholl",
+      "productPrice": "99",
+      "rating": 4.3,
+      "tags": ["new"],
+      "availability": true,
+      "popularityScore": 60,
+      "productImageNumber": "2"
+    }
+  }
+}
