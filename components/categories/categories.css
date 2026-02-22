@@ -1,0 +1,64 @@
+/* ============================================================
+   CATEGORIES COMPONENT
+   ============================================================ */
+
+.categories-section {
+  background: var(--clr-bg-alt);
+}
+
+.tabs-scroll {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  margin-bottom: 2rem;
+}
+
+.tabs-scroll::-webkit-scrollbar { display: none; }
+
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  width: max-content;
+  padding-bottom: 0.25rem;
+}
+
+.tab-btn {
+  background: var(--clr-white);
+  color: var(--clr-text-muted);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.625rem 1.25rem;
+  border: 2px solid var(--clr-border);
+  border-radius: 100px;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+}
+
+.tab-btn:hover {
+  border-color: var(--clr-primary);
+  color: var(--clr-primary);
+}
+
+.tab-btn.active {
+  background: var(--clr-primary);
+  color: var(--clr-white);
+  border-color: var(--clr-primary);
+}
+
+.tab-panel {
+  display: none;
+  animation: panelFadeIn 0.35s ease forwards;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+@keyframes panelFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

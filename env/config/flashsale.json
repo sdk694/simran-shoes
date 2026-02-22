@@ -1,0 +1,28 @@
+{
+  "flashsale": {
+    "1": {
+      "productName": "Campus Running Shoes",
+      "productPrice": "599",
+      "productImageNumber": "1",
+      "originalPrice": "999"
+    },
+    "2": {
+      "productName": "Flite Comfort Clogs",
+      "productPrice": "299",
+      "productImageNumber": "2",
+      "originalPrice": "499"
+    },
+    "3": {
+      "productName": "Liberty Sports Shoes",
+      "productPrice": "799",
+      "productImageNumber": "3",
+      "originalPrice": "1299"
+    },
+    "4": {
+      "productName": "Bata Leather Sandals",
+      "productPrice": "449",
+      "productImageNumber": "4",
+      "originalPrice": "699"
+    }
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "shoes": {
+    "1": {
+      "productName": "Campus Neo Running Shoes",
+      "productPrice": "699",
+      "productImageNumber": "1"
+    },
+    "2": {
+      "productName": "Liberty Force 10 Sneakers",
+      "productPrice": "849",
+      "productImageNumber": "2"
+    },
+    "3": {
+      "productName": "Bata Power Sports Shoes",
+      "productPrice": "999",
+      "productImageNumber": "3"
+    }
+  },
+  "sandals": {
+    "1": {
+      "productName": "Flite Casual Sandals",
+      "productPrice": "349",
+      "productImageNumber": "1"
+    },
+    "2": {
+      "productName": "Paragon Hawaii Sandals",
+      "productPrice": "199",
+      "productImageNumber": "2"
+    }
+  },
+  "traditional": {
+    "1": {
+      "productName": "Punjabi Jutti (Embroidered)",
+      "productPrice": "599",
+      "productImageNumber": "1"
+    },
+    "2": {
+      "productName": "Kolhapuri Chappal",
+      "productPrice": "449",
+      "productImageNumber": "2"
+    }
+  },
+  "rainwear": {
+    "1": {
+      "productName": "Bata Rain Boots",
+      "productPrice": "499",
+      "productImageNumber": "1"
+    },
+    "2": {
+      "productName": "Waterproof Gumboots",
+      "productPrice": "349",
+      "productImageNumber": "2"
+    }
+  },
+  "socks": {
+    "1": {
+      "productName": "Cotton Ankle Socks (Pack of 3)",
+      "productPrice": "99",
+      "productImageNumber": "1"
+    },
+    "2": {
+      "productName": "Woolen Winter Socks",
+      "productPrice": "149",
+      "productImageNumber": "2"
+    }
+  },
+  "wallets": {
+    "1": {
+      "productName": "Leather Bifold Wallet",
+      "productPrice": "299",
+      "productImageNumber": "1"
+    },
+    "2": {
+      "productName": "RFID Slim Card Wallet",
+      "productPrice": "249",
+      "productImageNumber": "2"
+    }
+  },
+  "belts": {
+    "1": {
+      "productName": "Genuine Leather Belt",
+      "productPrice": "349",
+      "productImageNumber": "1"
+    },
+    "2": {
+      "productName": "Casual Canvas Belt",
+      "productPrice": "199",
+      "productImageNumber": "2"
+    }
+  },
+  "chappals": {
+    "1": {
+      "productName": "Doctor Slippers",
+      "productPrice": "249",
+      "productImageNumber": "1"
+    },
+    "2": {
+      "productName": "VKC Pride Chappals",
+      "productPrice": "199",
+      "productImageNumber": "2"
+    }
+  },
+  "others": {
+    "1": {
+      "productName": "Shoe Care Kit",
+      "productPrice": "149",
+      "productImageNumber": "1"
+    },
+    "2": {
+      "productName": "Insole Comfort Pads",
+      "productPrice": "99",
+      "productImageNumber": "2"
+    }
+  }
+}
