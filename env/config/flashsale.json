@@ -1,28 +1,77 @@
 {
+  "hoursLeft": 18,
   "flashsale": {
     "1": {
+      "productId": "FS001",
       "productName": "Campus Running Shoes",
+      "brand": "Campus",
       "productPrice": "599",
-      "productImageNumber": "1",
-      "originalPrice": "999"
+      "originalPrice": "999",
+      "rating": 4.3,
+      "tags": ["bestseller"],
+      "availability": true,
+      "popularityScore": 92,
+      "productImageNumber": "1"
     },
     "2": {
+      "productId": "FS002",
       "productName": "Flite Comfort Clogs",
+      "brand": "Flite",
       "productPrice": "299",
-      "productImageNumber": "2",
-      "originalPrice": "499"
+      "originalPrice": "499",
+      "rating": 4.1,
+      "tags": ["deal"],
+      "availability": true,
+      "popularityScore": 84,
+      "productImageNumber": "2"
     },
     "3": {
-      "productName": "Liberty Sports Shoes",
-      "productPrice": "799",
-      "productImageNumber": "3",
-      "originalPrice": "1299"
+      "productId": "FS003",
+      "productName": "Paragon Doctor Slippers",
+      "brand": "Paragon",
+      "productPrice": "199",
+      "originalPrice": "349",
+      "rating": 4.5,
+      "tags": ["bestseller", "deal"],
+      "availability": true,
+      "popularityScore": 96,
+      "productImageNumber": "3"
     },
     "4": {
-      "productName": "Bata Leather Sandals",
+      "productId": "FS004",
+      "productName": "Sparx Sports Sneakers",
+      "brand": "Sparx",
       "productPrice": "449",
-      "productImageNumber": "4",
-      "originalPrice": "699"
+      "originalPrice": "799",
+      "rating": 4.2,
+      "tags": ["new"],
+      "availability": true,
+      "popularityScore": 78,
+      "productImageNumber": "4"
+    },
+    "5": {
+      "productId": "FS005",
+      "productName": "Khadim's Formal Shoes",
+      "brand": "Khadim's",
+      "productPrice": "699",
+      "originalPrice": "1199",
+      "rating": 4.0,
+      "tags": ["deal"],
+      "availability": true,
+      "popularityScore": 72,
+      "productImageNumber": "5"
+    },
+    "6": {
+      "productId": "FS006",
+      "productName": "Relaxo Hawaii Slippers",
+      "brand": "Relaxo",
+      "productPrice": "149",
+      "originalPrice": "249",
+      "rating": 3.9,
+      "tags": ["deal"],
+      "availability": true,
+      "popularityScore": 68,
+      "productImageNumber": "6"
     }
   }
 }

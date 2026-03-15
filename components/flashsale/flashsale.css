@@ -1,90 +1,30 @@
 /* ============================================================
-   FLASH SALE COMPONENT
+   FLASH SALE v5
    ============================================================ */
-
 .flashsale-section {
-  background: var(--clr-bg);
+  background: var(--clr-bg-raised);
   position: relative;
 }
-
 .flashsale-section::before {
   content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 4px;
-  background: linear-gradient(90deg,
-    var(--clr-primary) 0%,
-    var(--clr-gold) 50%,
-    var(--clr-primary) 100%);
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--clr-primary) 0%, var(--clr-gold) 50%, var(--clr-primary) 100%);
 }
 
-/* Countdown timer */
-.flash-countdown {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 2.5rem;
-  flex-wrap: wrap;
-}
+/* Countdown */
+.flash-timer-wrap { display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 3rem; flex-wrap: wrap; }
+.flash-timer-label { font-family: var(--font-ui); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--clr-text-muted); }
+.countdown-units { display: flex; align-items: center; gap: 0.35rem; }
+.countdown-unit { display: flex; flex-direction: column; align-items: center; background: var(--clr-bg-card); border: 1px solid var(--clr-border-mid); border-radius: var(--radius-sm); padding: 0.5rem 0.9rem; min-width: 56px; }
+.cd-num { font-family: var(--font-display); font-size: 1.6rem; letter-spacing: 0.04em; color: var(--clr-primary-light); line-height: 1; }
+.cd-lbl { font-family: var(--font-ui); font-size: 0.5rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--clr-text-dim); margin-top: 2px; }
+.countdown-sep { font-family: var(--font-display); font-size: 1.4rem; color: var(--clr-primary); margin-bottom: 0.5rem; }
 
-.flash-countdown-label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--clr-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.countdown-units {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-}
-
-.countdown-unit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: var(--clr-primary);
-  color: var(--clr-white);
-  border-radius: var(--radius-sm);
-  padding: 0.4rem 0.75rem;
-  min-width: 52px;
-}
-
-.countdown-num {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.countdown-lbl {
-  font-size: 0.55rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  opacity: 0.8;
-  margin-top: 2px;
-}
-
-.countdown-sep {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--clr-primary);
-  line-height: 1;
-  margin-bottom: 0.5rem;
-}
-
-/* Flash sale uses slightly larger cards */
-#flashsale-grid {
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-}
+#flashsale-grid { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
 
 @media (max-width: 768px) {
-  #flashsale-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  }
-  .countdown-unit { min-width: 44px; padding: 0.35rem 0.6rem; }
-  .countdown-num  { font-size: 1.1rem; }
+  #flashsale-grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); }
+  .countdown-unit { min-width: 44px; padding: 0.4rem 0.65rem; }
+  .cd-num { font-size: 1.2rem; }
 }
