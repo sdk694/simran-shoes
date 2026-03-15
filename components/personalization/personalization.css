@@ -1,0 +1,102 @@
+/* ============================================================
+   PERSONALIZATION v5 (PRD Feature C — Adaptive shelf)
+   ============================================================ */
+.personalization-section {
+  background: var(--clr-bg-raised);
+  border-top: 1px solid var(--clr-border);
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.shelf-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.shelf-scroll-wrap {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  margin: 0 -1.5rem;
+  padding: 0 1.5rem;
+}
+.shelf-scroll-wrap::-webkit-scrollbar { display: none; }
+
+.shelf-track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  padding-bottom: 0.5rem;
+}
+
+.shelf-track .product-card {
+  width: 210px;
+  flex-shrink: 0;
+}
+
+/* "Because you viewed" label */
+.shelf-reason {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--clr-text-dim);
+  margin-bottom: 1.25rem;
+}
+.shelf-reason-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--clr-gold);
+  flex-shrink: 0;
+}
+
+.shelf-view-all {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--clr-primary-light);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.shelf-view-all:hover { color: var(--clr-gold); gap: 0.55rem; }
+
+/* Tabs between "Trending" and "For You" */
+.shelf-tabs {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+.shelf-tab {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-xs);
+  border: 1.5px solid var(--clr-border);
+  color: var(--clr-text-muted);
+  background: transparent;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.shelf-tab.active { background: var(--clr-primary); border-color: var(--clr-primary); color: #fff; }
+.shelf-tab:hover:not(.active) { border-color: var(--clr-primary); color: var(--clr-primary-light); }
+
+@media (max-width: 768px) {
+  .shelf-track .product-card { width: 170px; }
+}

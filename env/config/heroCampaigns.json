@@ -1,0 +1,56 @@
+{
+  "campaigns": [
+    {
+      "campaignId": "camp-main-2025",
+      "label": "New Arrivals — 2025",
+      "line1": "Walk",
+      "line2": "With",
+      "line3": "Confidence.",
+      "sub": "Jabalpur's most loved footwear store. 21+ years of trust, comfort and style for every step.",
+      "heroImage": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1600&q=80&auto=format&fit=crop",
+      "ctaPrimary":   { "label": "Shop Collection", "target": "#categories" },
+      "ctaSecondary": { "label": "View Flash Sale",  "target": "#flashsale" },
+      "priorityPreload": true,
+      "sections": [
+        {
+          "eyebrow": "Everyday Comfort",
+          "title": "Made for the City",
+          "copy": "Shoes engineered for long walks, local bazaars, and everything in between.",
+          "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=900&q=75&auto=format&fit=crop",
+          "cta": "Shop Shoes", "target": "#categories"
+        },
+        {
+          "eyebrow": "Summer Essentials",
+          "title": "Open Toe Freedom",
+          "copy": "Breathable sandals and chappals for the heat of MP summers.",
+          "image": "https://images.unsplash.com/photo-1603487742131-4160ec999306?w=900&q=75&auto=format&fit=crop",
+          "cta": "Shop Sandals", "target": "#categories"
+        }
+      ]
+    },
+    {
+      "campaignId": "camp-summer-2025",
+      "label": "Summer Collection",
+      "line1": "Born",
+      "line2": "For The",
+      "line3": "Streets.",
+      "sub": "Sandals, chappals and open-toe comfort — made for Madhya Pradesh summers and city streets.",
+      "heroImage": "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=1600&q=80&auto=format&fit=crop",
+      "ctaPrimary":   { "label": "Shop Sandals", "target": "#categories" },
+      "ctaSecondary": { "label": "Browse All",   "target": "#categories" },
+      "priorityPreload": false
+    },
+    {
+      "campaignId": "camp-tradition-2025",
+      "label": "Heritage Footwear",
+      "line1": "Roots",
+      "line2": "&",
+      "line3": "Routes.",
+      "sub": "Authentic traditional footwear for every occasion — from pujas to pandals, weddings to festivals.",
+      "heroImage": "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=1600&q=80&auto=format&fit=crop",
+      "ctaPrimary":   { "label": "Shop Traditional", "target": "#categories" },
+      "ctaSecondary": { "label": "Our Story",         "target": "#about" },
+      "priorityPreload": false
+    }
+  ]
+}

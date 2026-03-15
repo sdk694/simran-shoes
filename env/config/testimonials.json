@@ -1,29 +1,10 @@
 {
   "testimonials": {
-    "1": {
-      "customerName": "Shreyas Kulkarni",
-      "customerFeedback": "Amazing variety! Found the perfect running shoes at a price I never expected. The staff was incredibly helpful and patient. Will definitely return.",
-      "customerRating": "5/5"
-    },
-    "2": {
-      "customerName": "Ramesh Ajua",
-      "customerFeedback": "Simran Shoes has been my family's go-to store for years. Quality products, honest pricing, and a great shopping experience every single time.",
-      "customerRating": "5/5"
-    },
-    "3": {
-      "customerName": "Priya Sharma",
-      "customerFeedback": "Loved the collection of traditional footwear. Got beautiful juttis for my sister's wedding. Excellent quality and very affordable.",
-      "customerRating": "4/5"
-    },
-    "4": {
-      "customerName": "Vikas Tiwari",
-      "customerFeedback": "Best footwear store in Jabalpur without a doubt. They have everything from school shoes to formal wear. Trustworthy place to shop.",
-      "customerRating": "5/5"
-    },
-    "5": {
-      "customerName": "Anita Patel",
-      "customerFeedback": "Great selection of sandals and chappals. WhatsApp ordering was super convenient — placed my order from home and it was ready in hours!",
-      "customerRating": "4/5"
-    }
+    "1": { "customerName": "Priya Sharma",  "customerFeedback": "Best footwear store in Jabalpur! The staff is incredibly helpful and the variety is unmatched. Found perfect sandals for my daughter's wedding.", "rating": 5, "location": "Napier Town" },
+    "2": { "customerName": "Rahul Gupta",   "customerFeedback": "Been a loyal customer for over 10 years. Quality is always top-notch. Love the new WhatsApp ordering system — so convenient!", "rating": 5, "location": "Adhartal" },
+    "3": { "customerName": "Sunita Patel",  "customerFeedback": "The traditional Kolhapuri collection is stunning. Bought handcrafted mojaris for my son's wedding. Everyone complimented them!", "rating": 5, "location": "Civil Lines" },
+    "4": { "customerName": "Amit Joshi",    "customerFeedback": "Great prices, amazing variety of brands, and honest advice. Bought Campus shoes for my kids — they've lasted beautifully.", "rating": 4, "location": "Vijay Nagar" },
+    "5": { "customerName": "Kavita Tiwari", "customerFeedback": "My rain boots from here have lasted three monsoon seasons! The quality is exceptional and the staff remembered my preferences from last visit.", "rating": 5, "location": "Madan Mahal" },
+    "6": { "customerName": "Deepak Mishra", "customerFeedback": "Huge selection of shoes for every budget. My go-to store every school season for my children. Highly recommend Simran Shoes!", "rating": 4, "location": "Gorakhpur" }
   }
 }

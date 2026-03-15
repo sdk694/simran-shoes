@@ -1,0 +1,16 @@
+{
+  "brands": [
+    { "brandId": "campus",    "name": "Campus" },
+    { "brandId": "bata",      "name": "Bata" },
+    { "brandId": "paragon",   "name": "Paragon" },
+    { "brandId": "vkc",       "name": "VKC" },
+    { "brandId": "relaxo",    "name": "Relaxo" },
+    { "brandId": "khadims",   "name": "Khadim's" },
+    { "brandId": "flite",     "name": "Flite" },
+    { "brandId": "liberty",   "name": "Liberty" },
+    { "brandId": "sparx",     "name": "Sparx" },
+    { "brandId": "bonjour",   "name": "Bonjour" },
+    { "brandId": "killer",    "name": "Killer" },
+    { "brandId": "scholl",    "name": "Scholl" }
+  ]
+}

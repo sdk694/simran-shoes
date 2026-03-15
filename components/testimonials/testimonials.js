@@ -1,74 +1,56 @@
-/**
- * TESTIMONIALS COMPONENT
- * Renders customer review cards from testimonials.json
- */
-
 const TestimonialsComponent = (() => {
+  const FALLBACK = [
+    { customerName: 'Priya Sharma',    customerFeedback: 'Best footwear store in Jabalpur! Great variety and the staff helped me find the perfect sandals.', rating: 5, location: 'Napier Town' },
+    { customerName: 'Rahul Gupta',     customerFeedback: 'Been shopping here for 10 years. Never disappointed. The quality is consistently excellent.',         rating: 5, location: 'Adhartal' },
+    { customerName: 'Sunita Patel',    customerFeedback: 'The traditional footwear collection is stunning. Bought juttis for my daughter\'s wedding here.',      rating: 5, location: 'Civil Lines' },
+    { customerName: 'Amit Joshi',      customerFeedback: 'Great prices and amazing variety of brands. WhatsApp ordering is so convenient — will shop again!',    rating: 4, location: 'Vijay Nagar' },
+    { customerName: 'Kavita Tiwari',   customerFeedback: 'The rain boots I got here have lasted three monsoon seasons. Excellent quality and friendly service.',   rating: 5, location: 'Madan Mahal' },
+    { customerName: 'Deepak Mishra',   customerFeedback: 'Huge selection of campus shoes for kids. My go-to store every school season. Highly recommend!',        rating: 4, location: 'Gorakhpur' },
+  ];
 
-  function getShell() {
-    return `
-      <section class="section testimonials-section" id="testimonials" aria-label="Customer Testimonials">
-        <div class="container">
-          <div class="section-header">
-            <div class="section-label">What People Say</div>
-            <h2 class="section-title">Customer Reviews</h2>
-            <p class="section-sub">Words from our happy Jabalpur family</p>
-          </div>
-          <div class="testimonials-grid" id="testimonials-grid" role="list"></div>
-        </div>
-      </section>`;
+  function renderStars(n) {
+    let html = '';
+    for (let i = 1; i <= 5; i++) html += `<span class="star${i <= n ? ' filled' : ''}">★</span>`;
+    return html;
   }
 
-  function buildCard(testimonial) {
-    const name     = sanitize(testimonial.customerName     || 'Anonymous');
-    const feedback = sanitize(testimonial.customerFeedback || '');
-    const rating   = testimonial.customerRating || '5/5';
+  function renderCard(t) {
+    const name     = sanitize(t.customerName     || 'Customer');
+    const feedback = sanitize(t.customerFeedback || '');
+    const rating   = Math.min(5, Math.max(1, parseInt(t.rating || 5)));
+    const location = sanitize(t.location || t.customerLocation || 'Jabalpur');
     const initial  = name.charAt(0).toUpperCase();
-    const parts    = rating.split('/');
-    const ratingNum = parts[0];
-    const totalNum  = parts[1] || '5';
-
-    const card = document.createElement('article');
-    card.className = 'testimonial-card';
-    card.setAttribute('role', 'listitem');
-
-    card.innerHTML = `
-      <div class="testimonial-stars" aria-label="Rating: ${ratingNum} out of ${totalNum} stars">
-        ${renderStars(rating)}
-      </div>
-      <p class="testimonial-feedback">${feedback}</p>
-      <div class="testimonial-author">
-        <div class="author-avatar" aria-hidden="true">${initial}</div>
-        <div>
-          <p class="author-name">${name}</p>
-          <p class="author-location">Jabalpur</p>
+    return `
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">${renderStars(rating)}</div>
+        <p class="testimonial-text">${feedback}</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">${initial}</div>
+          <div>
+            <div class="author-name">${name}</div>
+            <div class="author-location">📍 ${location}</div>
+          </div>
         </div>
       </div>`;
-
-    return card;
-  }
-
-  function renderCards(data) {
-    const grid = document.getElementById('testimonials-grid');
-    if (!grid) return;
-
-    if (!data?.testimonials || Object.keys(data.testimonials).length === 0) {
-      grid.innerHTML = `<div class="empty-state"><p>Be the first to share your experience!</p></div>`;
-      return;
-    }
-
-    const keys = Object.keys(data.testimonials).sort((a, b) => parseInt(a) - parseInt(b));
-    keys.forEach(key => {
-      grid.appendChild(buildCard(data.testimonials[key]));
-    });
   }
 
   function init(data) {
     const root = document.getElementById('testimonials-root');
     if (!root) return;
-    root.innerHTML = getShell();
-    renderCards(data);
+    const items = data?.testimonials ? Object.values(data.testimonials) : FALLBACK;
+    root.innerHTML = `
+      <section class="section testimonials-section" id="testimonials" aria-label="Customer reviews">
+        <div class="container">
+          <div class="section-header center">
+            <span class="section-eyebrow">Customer Love</span>
+            <h2 class="section-title">What Jabalpur <span class="accent">Says</span></h2>
+            <p class="section-sub">5,000+ happy customers trust Simran Shoes for every occasion.</p>
+          </div>
+          <div class="testimonials-grid">
+            ${items.map(t => renderCard(t)).join('')}
+          </div>
+        </div>
+      </section>`;
   }
-
   return { init };
 })();

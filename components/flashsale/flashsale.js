@@ -1,111 +1,71 @@
-/**
- * FLASH SALE COMPONENT
- * Products grid with live countdown timer (hours/mins/secs)
- * Timer is seeded from hoursLeft in flashsale.json
- */
-
 const FlashSaleComponent = (() => {
-  let _timerInterval = null;
+  let _timer = null;
 
   function getShell(hoursLeft) {
     return `
-      <section class="section flashsale-section" id="flashsale" aria-label="Flash Sale">
+      <section class="section flashsale-section reveal" id="flashsale" aria-label="Flash Sale">
         <div class="container">
-          <div class="section-header">
-            <div class="section-label">Limited Time Only</div>
-            <h2 class="section-title">⚡ Flash Sale</h2>
-            <p class="section-sub">Prices drop, deals fly. Grab yours before time runs out.</p>
+          <div class="section-header center">
+            <span class="section-eyebrow">Limited Time</span>
+            <h2 class="section-title">⚡ Flash <span class="accent">Sale</span></h2>
+            <p class="section-sub">Prices drop, deals fly. Grab yours before the clock runs out.</p>
           </div>
-
-          <div class="flash-countdown" aria-live="polite" aria-label="Sale countdown timer">
-            <span class="flash-countdown-label">Ends in</span>
+          <div class="flash-timer-wrap" aria-live="polite">
+            <span class="flash-timer-label">Ends in</span>
             <div class="countdown-units">
-              <div class="countdown-unit">
-                <span class="countdown-num" id="cd-hours">00</span>
-                <span class="countdown-lbl">Hrs</span>
-              </div>
+              <div class="countdown-unit"><span class="cd-num" id="cd-h">00</span><span class="cd-lbl">Hrs</span></div>
               <span class="countdown-sep" aria-hidden="true">:</span>
-              <div class="countdown-unit">
-                <span class="countdown-num" id="cd-mins">00</span>
-                <span class="countdown-lbl">Min</span>
-              </div>
+              <div class="countdown-unit"><span class="cd-num" id="cd-m">00</span><span class="cd-lbl">Min</span></div>
               <span class="countdown-sep" aria-hidden="true">:</span>
-              <div class="countdown-unit">
-                <span class="countdown-num" id="cd-secs">00</span>
-                <span class="countdown-lbl">Sec</span>
-              </div>
+              <div class="countdown-unit"><span class="cd-num" id="cd-s">00</span><span class="cd-lbl">Sec</span></div>
             </div>
           </div>
-
           <div class="products-grid" id="flashsale-grid" role="list"></div>
         </div>
       </section>`;
   }
 
-  function startCountdown(hoursLeft) {
-    // Total seconds from hoursLeft
-    let remaining = Math.max(0, hoursLeft) * 3600;
-
+  function startTimer(hoursLeft) {
+    let rem = Math.max(0, hoursLeft) * 3600;
     function tick() {
-      const h = Math.floor(remaining / 3600);
-      const m = Math.floor((remaining % 3600) / 60);
-      const s = remaining % 60;
-
-      const hEl = document.getElementById('cd-hours');
-      const mEl = document.getElementById('cd-mins');
-      const sEl = document.getElementById('cd-secs');
-
-      if (!hEl) { clearInterval(_timerInterval); return; }
-
-      hEl.textContent = String(h).padStart(2, '0');
-      mEl.textContent = String(m).padStart(2, '0');
-      sEl.textContent = String(s).padStart(2, '0');
-
-      if (remaining <= 0) {
-        clearInterval(_timerInterval);
-        return;
-      }
-      remaining--;
+      const h = Math.floor(rem / 3600), m = Math.floor((rem % 3600) / 60), s = rem % 60;
+      const hEl = document.getElementById('cd-h');
+      if (!hEl) { clearInterval(_timer); return; }
+      hEl.textContent = String(h).padStart(2,'0');
+      document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+      document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+      if (rem-- <= 0) clearInterval(_timer);
     }
-
-    tick(); // run immediately
-    if (_timerInterval) clearInterval(_timerInterval);
-    _timerInterval = setInterval(tick, 1000);
-  }
-
-  function renderProducts(data) {
-    const grid = document.getElementById('flashsale-grid');
-    if (!grid) return;
-
-    const products = data?.flashsale;
-    if (!products || Object.keys(products).length === 0) {
-      grid.innerHTML = `<div class="empty-state"><p>No flash sale items right now. Check back soon!</p></div>`;
-      return;
-    }
-
-    const keys = Object.keys(products).sort((a, b) => parseInt(a) - parseInt(b));
-    keys.forEach(key => {
-      const card = buildProductCard(
-        products[key],
-        `${ASSETS_BASE}flashsale/`,
-        window._waNumber,
-        {
-          isFlash:     true,
-          onQuickView: (product, imgPath) => ModalComponent.open(product, imgPath),
-        }
-      );
-      grid.appendChild(card);
-    });
+    tick();
+    if (_timer) clearInterval(_timer);
+    _timer = setInterval(tick, 1000);
   }
 
   function init(data) {
     const root = document.getElementById('flashsale-root');
     if (!root) return;
-
-    const hoursLeft = data?.hoursLeft ?? 18;
+    const hoursLeft = data?.hoursLeft || 12;
     root.innerHTML = getShell(hoursLeft);
-    renderProducts(data);
-    startCountdown(hoursLeft);
+    startTimer(hoursLeft);
+
+    const grid    = document.getElementById('flashsale-grid');
+    const items   = data?.flashsale;
+    const waNum   = window._waNumber || '';
+    const imgBase = 'assets/flashsale/';
+
+    if (!items || !Object.keys(items).length) {
+      grid.innerHTML = '<div class="empty-state"><p>Check back soon for flash deals!</p></div>';
+      return;
+    }
+
+    Object.values(items).forEach(p => {
+      const card = buildProductCard(p, imgBase, waNum, {
+        isFlash: true,
+        onQuickView: (prod, imgPath) => ModalComponent.open(prod, imgPath),
+        campaignId: 'flash-sale',
+      });
+      grid.appendChild(card);
+    });
   }
 
   return { init };
