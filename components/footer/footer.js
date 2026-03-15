@@ -5,7 +5,7 @@ const FooterComponent = (() => {
     const address = sanitize(data?.address       || 'Napier Town, Jabalpur, MP — 482001');
     const insta   = sanitize(data?.instagram     || '#');
     const maps    = sanitize(data?.googleMapsLink || '#');
-    const waNum   = sanitize(data?.whatsappNumber || '9340970624');
+    const waNum   = sanitize(data?.whatsappNumber || '');
     const hours   = sanitize(data?.storeHours    || 'Mon–Sat: 9:30 AM – 9:00 PM · Sun: 10:00 AM – 8:00 PM');
     const year    = new Date().getFullYear();
     const waHref  = waNum ? `https://wa.me/${waNum}` : '#';

@@ -6,7 +6,7 @@ const AboutComponent = (() => {
     const address = sanitize(data?.address        || 'Napier Town, Jabalpur, Madhya Pradesh — 482001');
     const insta   = sanitize(data?.instagram      || '#');
     const maps    = sanitize(data?.googleMapsLink || 'https://maps.google.com/?q=Jabalpur');
-    const waNum   = sanitize(data?.whatsappNumber || '9340970624');
+    const waNum   = sanitize(data?.whatsappNumber || '');
     const hours   = sanitize(data?.storeHours     || 'Mon–Sat: 9:30 AM – 9:00 PM · Sun: 10:00 AM – 8:00 PM');
 
     // set global WA number for other components
@@ -23,10 +23,10 @@ const AboutComponent = (() => {
             <div class="about-visual">
               <div class="about-hero-img">
                 <img
-                  src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=800&q=80&auto=format&fit=crop"
+                  src="https://plus.unsplash.com/premium_photo-1673977133524-89e1f141f2bb?q=80&w=388&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?w=800&q=80&auto=format&fit=crop"
                   alt="Inside Simran Shoes store, Jabalpur"
                   loading="lazy"
-                  onerror="this.src='https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80'"
+                  onerror="this.src='https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=800&q=80'"
                 />
                 <div class="about-img-overlay" aria-hidden="true"></div>
               </div>

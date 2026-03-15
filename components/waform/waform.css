@@ -1,0 +1,63 @@
+/* WAFORM v6 — WhatsApp Pre-Enquiry Form Modal */
+.waform-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(26, 14, 16, 0.6);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  z-index: 3000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.waform-backdrop.open { opacity: 1; pointer-events: all; }
+.waform-box {
+  background: var(--clr-bg-card); border-radius: var(--radius-md);
+  width: 100%; max-width: 480px; max-height: 95vh; overflow-y: auto;
+  box-shadow: var(--shadow-lg); border: 1px solid var(--clr-border-mid);
+  transform: translateY(32px) scale(0.96); transition: transform 0.32s var(--ease-spring);
+  position: relative;
+}
+.waform-backdrop.open .waform-box { transform: translateY(0) scale(1); }
+.waform-header { background: var(--clr-whatsapp); padding: 1.5rem 1.75rem 1.25rem; border-radius: var(--radius-md) var(--radius-md) 0 0; position: relative; }
+.waform-header-top { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+.waform-wa-icon { width: 44px; height: 44px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.waform-title { font-family: var(--font-display); font-size: 1.6rem; letter-spacing: 0.04em; text-transform: uppercase; color: #fff; line-height: 1; }
+.waform-subtitle { font-family: var(--font-body); font-size: 0.82rem; color: rgba(255,255,255,0.82); line-height: 1.5; }
+.waform-product-strip { display: flex; align-items: center; gap: 0.75rem; background: rgba(255,255,255,0.15); border-radius: var(--radius-xs); padding: 0.75rem 1rem; margin-top: 1rem; }
+.waform-product-thumb { width: 44px; height: 44px; border-radius: var(--radius-xs); background: rgba(255,255,255,0.2); overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+.waform-product-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.waform-product-name { font-family: var(--font-ui); font-size: 0.88rem; font-weight: 700; color: #fff; }
+.waform-product-price { font-family: var(--font-display); font-size: 1.1rem; color: rgba(255,255,255,0.9); letter-spacing: 0.04em; }
+.waform-close { position: absolute; top: 1rem; right: 1rem; width: 30px; height: 30px; background: rgba(255,255,255,0.2); border: none; border-radius: 50%; color: #fff; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+.waform-close:hover { background: rgba(255,255,255,0.35); transform: rotate(90deg); }
+.waform-body { padding: 1.75rem; }
+.waform-intro { font-family: var(--font-ui); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--clr-text-dim); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
+.waform-intro::before { content: ''; display: block; width: 18px; height: 1.5px; background: var(--clr-gold); }
+.waform-field { margin-bottom: 1.1rem; }
+.waform-label { display: block; font-family: var(--font-ui); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--clr-text-muted); margin-bottom: 0.45rem; }
+.waform-label .req { color: var(--clr-primary); margin-left: 2px; }
+.waform-input, .waform-select { width: 100%; padding: 0.75rem 1rem; background: var(--clr-bg-surface); border: 1.5px solid var(--clr-border); border-radius: var(--radius-xs); font-family: var(--font-body); font-size: 0.9rem; color: var(--clr-text); outline: none; transition: var(--transition); appearance: none; -webkit-appearance: none; }
+.waform-input:focus, .waform-select:focus { border-color: var(--clr-whatsapp); box-shadow: 0 0 0 3px rgba(37,211,102,0.15); background: var(--clr-bg-raised); }
+.waform-input.error, .waform-select.error { border-color: var(--clr-red); box-shadow: 0 0 0 3px rgba(220,38,38,0.1); }
+.waform-input::placeholder { color: var(--clr-text-dim); }
+.waform-input-wrap { position: relative; }
+.waform-input-wrap .waform-input { padding-left: 2.6rem; }
+.waform-input-icon { position: absolute; left: 0.875rem; top: 50%; transform: translateY(-50%); color: var(--clr-text-dim); font-size: 1rem; pointer-events: none; }
+.waform-error { font-size: 0.72rem; color: var(--clr-red); font-family: var(--font-ui); letter-spacing: 0.04em; margin-top: 0.35rem; display: none; }
+.waform-error.show { display: block; }
+.waform-select-wrap { position: relative; }
+.waform-select-wrap::after { content: '▼'; position: absolute; right: 0.875rem; top: 50%; transform: translateY(-50%); pointer-events: none; font-size: 0.6rem; color: var(--clr-text-dim); }
+.waform-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.875rem; }
+.waform-note { background: var(--clr-bg-surface); border: 1px solid var(--clr-border); border-radius: var(--radius-xs); padding: 0.75rem 1rem; font-size: 0.78rem; color: var(--clr-text-muted); line-height: 1.55; margin-bottom: 1.25rem; display: flex; gap: 0.5rem; align-items: flex-start; }
+.waform-note-icon { flex-shrink: 0; font-size: 0.9rem; margin-top: 0.05rem; }
+.waform-actions { display: flex; flex-direction: column; gap: 0.65rem; }
+.waform-submit { display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; background: var(--clr-whatsapp); color: #fff; font-family: var(--font-ui); font-weight: 700; font-size: 0.92rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 1rem 1.5rem; border-radius: var(--radius-xs); border: none; cursor: pointer; transition: var(--transition); }
+.waform-submit:hover { background: var(--clr-whatsapp-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.3); }
+.waform-skip { font-family: var(--font-ui); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--clr-text-dim); background: none; border: none; cursor: pointer; padding: 0.4rem; text-align: center; transition: var(--transition); }
+.waform-skip:hover { color: var(--clr-primary); }
+.waform-success { display: none; flex-direction: column; align-items: center; text-align: center; padding: 2.5rem 1.75rem; gap: 1rem; }
+.waform-success.show { display: flex; }
+.waform-success-icon { font-size: 3rem; }
+.waform-success-title { font-family: var(--font-display); font-size: 1.8rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--clr-text); }
+.waform-success-sub { font-size: 0.875rem; color: var(--clr-text-muted); line-height: 1.6; }
+@media (max-width: 480px) { .waform-row { grid-template-columns: 1fr; } .waform-body { padding: 1.25rem; } .waform-header { padding: 1.25rem 1.25rem 1rem; } }

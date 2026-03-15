@@ -12,23 +12,27 @@ async function initApp() {
     fetchConfig(CONFIGS.heroCampaigns),
   ]);
 
+  // Init singletons first
   ModalComponent.init();
+  WAFormComponent.init();
+  WaFormComponent.init();   // intercepts all WA button clicks site-wide
+
+  // Render components in page order
   NavbarComponent.init(aboutData);
   SearchComponent.init(catData, flashData);
   HeroComponent.init(campaignData);
   CampaignComponent.init(campaignData);
   BrandsComponent.init(brandsData);
-  AboutComponent.init(aboutData);          // sets window._waNumber
-  FlashSaleComponent.init(flashData);      // reads window._waNumber
-  PersonalizationComponent.init(catData);  // reads window._waNumber
-  CategoriesComponent.init(catData);       // reads window._waNumber
+  AboutComponent.init(aboutData);           // sets window._waNumber
+  FlashSaleComponent.init(flashData);
+  PersonalizationComponent.init(catData);
+  CategoriesComponent.init(catData);
   TestimonialsComponent.init(testData);
   FooterComponent.init(aboutData);
 
   const stickyWa = document.getElementById('sticky-wa');
   if (stickyWa && window._waNumber) {
-    stickyWa.href = whatsappURL(window._waNumber, null, null, null, 'sticky-cta');
-    stickyWa.href = `https://wa.me/${window._waNumber}?text=${encodeURIComponent("Hi! I'd like to explore your latest collection at Simran Shoes, Jabalpur.")}`;
+    stickyWa.href = `https://wa.me/${window._waNumber}?text=${encodeURIComponent("Hi! I'd like to explore your collection at Simran Shoes, Jabalpur.")}`;
   }
 
   initScrollReveal();
@@ -50,7 +54,6 @@ function initScrollReveal() {
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); obs.unobserve(e.target); } });
   }, { threshold: 0.07, rootMargin: '0px 0px -30px 0px' });
-
   setTimeout(() => document.querySelectorAll('.reveal').forEach(el => obs.observe(el)), 120);
 }
 
