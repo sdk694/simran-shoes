@@ -30,15 +30,26 @@ async function fetchConfig(path) {
   }
 }
 
-/* ── WhatsApp URL (PRD spec: productName, SKU, price, campaignId) ── */
+/* ── WhatsApp URL (used only as fallback / skip) ── */
 function whatsappURL(number, productName, price, sku, campaignId) {
   const name = productName || 'a product';
   let msg = `Hi! I'm interested in *${name}*`;
   if (sku)   msg += ` (SKU: ${sku})`;
   if (price) msg += `. Price ₹${price}`;
-  msg += `. Is it available in store?`;
+  msg += `. Is it available?`;
   if (campaignId) msg += ` [ref:${campaignId}]`;
   return `https://wa.me/${number || ''}?text=${encodeURIComponent(msg)}`;
+}
+
+/* ── Open WA form (intercepts all WA clicks) ── */
+function openWAForm(product, imgPath, waNumber) {
+  if (typeof WAFormComponent !== 'undefined' && WAFormComponent.open) {
+    WAFormComponent.open(product, imgPath, waNumber || window._waNumber || '');
+  } else {
+    // Fallback: direct link
+    const url = whatsappURL(waNumber || window._waNumber || '', product?.productName, product?.productPrice || product?.price, product?.productId);
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
 }
 
 /* ── WhatsApp icon SVG ── */
@@ -71,10 +82,7 @@ function renderStars(rating) {
 /* ── Tag badges HTML ── */
 function renderTags(tags) {
   return (tags || []).map(t => {
-    const cls = t === 'bestseller' ? 'tag-bestseller'
-              : t === 'new'        ? 'tag-new'
-              : t === 'deal'       ? 'tag-deal'
-              :                      'tag-default';
+    const cls = t === 'bestseller' ? 'tag-bestseller' : t === 'new' ? 'tag-new' : t === 'deal' ? 'tag-deal' : 'tag-default';
     return `<span class="tag ${cls}">${sanitize(t)}</span>`;
   }).join('');
 }
@@ -86,8 +94,7 @@ function loadProductImage(imgPath, altText, onFail) {
   img.loading = 'lazy';
   img.decoding = 'async';
   img.style.cssText = 'width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;';
-
-  const exts = ['jpg', 'png', 'webp', 'jpeg', 'svg'];
+  const exts = ['jpg','png','webp','jpeg','svg'];
   let idx = 0;
   function tryNext() {
     if (idx >= exts.length) { if (onFail) onFail(); return; }
@@ -98,16 +105,16 @@ function loadProductImage(imgPath, altText, onFail) {
   return img;
 }
 
-/* ── Product Card Builder v5 (used by flashsale, categories, personalization) ── */
+/* ── Product Card Builder v6 ── */
+/* All WA buttons now open WAFormComponent instead of direct link */
 function buildProductCard(product, imgBasePath, waNumber, options = {}) {
-  const { isFlash = false, onQuickView = null, campaignId = '' } = options;
+  const { onQuickView = null, campaignId = '' } = options;
 
   const name      = sanitize(product.productName  || '');
   const brand     = sanitize(product.brand        || '');
   const price     = sanitize(String(product.productPrice || product.price || ''));
   const imgNum    = sanitize(String(product.productImageNumber || '1'));
   const origPrice = sanitize(String(product.originalPrice || product.msrp || ''));
-  const sku       = sanitize(product.productId    || '');
   const discount  = origPrice ? calcDiscount(origPrice, price) : null;
   const rating    = product.rating    || 0;
   const tags      = product.tags      || [];
@@ -123,108 +130,61 @@ function buildProductCard(product, imgBasePath, waNumber, options = {}) {
   /* image */
   const imgWrap = document.createElement('div');
   imgWrap.className = 'product-image-wrap';
-
   const imgEl = loadProductImage(imgPath, name, () => {
-    imgWrap.innerHTML = `<div class="product-image-placeholder">
-      <span class="placeholder-icon">👟</span><span>Coming Soon</span>
-    </div>`;
+    imgWrap.innerHTML = `<div class="product-image-placeholder"><span class="placeholder-icon">👟</span><span>Coming Soon</span></div>`;
   });
   imgWrap.appendChild(imgEl);
 
-  if (tags.length) {
-    const tw = document.createElement('div');
-    tw.className = 'product-tags-overlay';
-    tw.innerHTML = renderTags(tags);
-    imgWrap.appendChild(tw);
-  }
-  if (discount) {
-    const db = document.createElement('div');
-    db.className = 'discount-badge';
-    db.textContent = `−${discount}%`;
-    imgWrap.appendChild(db);
-  }
+  if (tags.length) { const tw = document.createElement('div'); tw.className = 'product-tags-overlay'; tw.innerHTML = renderTags(tags); imgWrap.appendChild(tw); }
+  if (discount)    { const db = document.createElement('div'); db.className = 'discount-badge'; db.textContent = `−${discount}%`; imgWrap.appendChild(db); }
 
   const qv = document.createElement('button');
-  qv.className = 'quick-view-btn';
-  qv.textContent = 'Quick View';
+  qv.className = 'quick-view-btn'; qv.textContent = 'Quick View';
   qv.setAttribute('aria-label', `Quick view ${name}`);
   qv.addEventListener('click', e => { e.stopPropagation(); if (onQuickView) onQuickView(product, imgPath); });
   imgWrap.appendChild(qv);
 
-  if (!avail) {
-    const oos = document.createElement('div');
-    oos.className = 'oos-overlay';
-    oos.textContent = 'Out of Stock';
-    imgWrap.appendChild(oos);
-  }
+  if (!avail) { const oos = document.createElement('div'); oos.className = 'oos-overlay'; oos.textContent = 'Out of Stock'; imgWrap.appendChild(oos); }
 
   /* body */
   const body = document.createElement('div');
   body.className = 'product-body';
-
   if (brand) { const b = document.createElement('p'); b.className = 'product-brand'; b.textContent = brand; body.appendChild(b); }
-
-  const nameEl = document.createElement('h3');
-  nameEl.className = 'product-name'; nameEl.textContent = name;
-  body.appendChild(nameEl);
-
-  if (rating > 0) {
-    const rEl = document.createElement('div');
-    rEl.className = 'product-rating'; rEl.innerHTML = renderStars(rating);
-    body.appendChild(rEl);
-  }
-
-  const pEl = document.createElement('div');
-  pEl.className = 'product-pricing';
+  const nameEl = document.createElement('h3'); nameEl.className = 'product-name'; nameEl.textContent = name; body.appendChild(nameEl);
+  if (rating > 0) { const rEl = document.createElement('div'); rEl.className = 'product-rating'; rEl.innerHTML = renderStars(rating); body.appendChild(rEl); }
+  const pEl = document.createElement('div'); pEl.className = 'product-pricing';
   pEl.innerHTML = `<span class="product-price">₹${price}</span>`;
   if (origPrice && discount) pEl.innerHTML += `<span class="product-original-price">₹${origPrice}</span><span class="product-discount-label">${discount}% off</span>`;
   body.appendChild(pEl);
 
   const acts = document.createElement('div');
   acts.className = 'product-actions';
-  const waBtn = document.createElement('a');
-  waBtn.className = 'whatsapp-btn-product';
-  waBtn.href = whatsappURL(waNumber, name, price, sku, campaignId);
-  waBtn.target = '_blank';
-  waBtn.rel = 'noopener noreferrer';
+
+  /* WA button → opens form instead of direct link */
+  const waBtn = document.createElement('button');
+  waBtn.className = `whatsapp-btn-product${avail ? '' : ' disabled'}`;
   waBtn.setAttribute('aria-label', `Buy ${name} on WhatsApp`);
   waBtn.innerHTML = `${whatsappIconSVG(14)} Buy on WhatsApp`;
-  if (!avail) waBtn.classList.add('disabled');
-  waBtn.addEventListener('click', e => { e.stopPropagation(); _trackWA(sku || name, campaignId); });
+  waBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    if (!avail) return;
+    _trackWA(product.productId || name, campaignId);
+    openWAForm(product, imgPath, waNumber);
+  });
   acts.appendChild(waBtn);
   body.appendChild(acts);
-
   card.appendChild(imgWrap);
   card.appendChild(body);
 
   /* mobile tap = quick view */
   card.addEventListener('click', e => {
-    if (window.innerWidth <= 768 && onQuickView && !e.target.closest('a')) onQuickView(product, imgPath);
+    if (window.innerWidth <= 768 && onQuickView && !e.target.closest('button')) onQuickView(product, imgPath);
   });
 
   return card;
 }
 
-/* ── Telemetry (localStorage) ── */
-function _trackView(id) {
-  try {
-    const v = JSON.parse(localStorage.getItem('ss_views') || '[]');
-    const i = v.indexOf(id);
-    if (i > -1) v.splice(i, 1);
-    v.unshift(id);
-    localStorage.setItem('ss_views', JSON.stringify(v.slice(0, 24)));
-  } catch {}
-}
-
-function _trackWA(id, camp) {
-  try {
-    const ev = JSON.parse(localStorage.getItem('ss_wa') || '[]');
-    ev.push({ id, camp, t: Date.now() });
-    localStorage.setItem('ss_wa', JSON.stringify(ev.slice(-50)));
-  } catch {}
-}
-
-function getRecentViews() {
-  try { return JSON.parse(localStorage.getItem('ss_views') || '[]'); }
-  catch { return []; }
-}
+/* ── Telemetry ── */
+function _trackView(id) { try { const v=JSON.parse(localStorage.getItem('ss_views')||'[]'); const i=v.indexOf(id); if(i>-1)v.splice(i,1); v.unshift(id); localStorage.setItem('ss_views',JSON.stringify(v.slice(0,24))); } catch{} }
+function _trackWA(id,camp) { try { const ev=JSON.parse(localStorage.getItem('ss_wa')||'[]'); ev.push({id,camp,t:Date.now()}); localStorage.setItem('ss_wa',JSON.stringify(ev.slice(-50))); } catch{} }
+function getRecentViews() { try { return JSON.parse(localStorage.getItem('ss_views')||'[]'); } catch { return []; } }

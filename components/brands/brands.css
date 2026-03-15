@@ -1,15 +1,15 @@
-/* brands.css */
-.brands-section { background: var(--clr-bg); border-top: 1px solid var(--clr-border); border-bottom: 1px solid var(--clr-border); padding: 36px 0; }
-.brands-inner { display: flex; align-items: center; gap: 1.25rem; overflow-x: auto; scrollbar-width: none; padding: 0 1.5rem; max-width: var(--max-w); margin: 0 auto; }
-.brands-inner::-webkit-scrollbar { display: none; }
-.brands-label { font-family: var(--font-ui); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--clr-text-dim); white-space: nowrap; flex-shrink: 0; }
-.brands-divider { width: 1px; height: 24px; background: var(--clr-border); flex-shrink: 0; }
-.brands-list { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
-.brand-pill {
-  font-family: var(--font-ui); font-size: 0.78rem; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase; color: var(--clr-text-dim);
-  padding: 0.4rem 1rem; border-radius: 100px;
-  border: 1px solid var(--clr-border); white-space: nowrap;
-  transition: var(--transition); cursor: default;
+/* BRANDS v6 — Light */
+.brands-section{background:var(--clr-bg-raised);border-top:1px solid var(--clr-border);border-bottom:1px solid var(--clr-border);padding:32px 0;}
+.brands-inner{display:flex;align-items:center;gap:1.25rem;overflow-x:auto;scrollbar-width:none;padding:0 1.5rem;max-width:var(--max-w);margin:0 auto;}
+.brands-inner::-webkit-scrollbar{display:none;}
+.brands-label{font-family:var(--font-ui);font-size:0.62rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--clr-text-dim);white-space:nowrap;flex-shrink:0;}
+.brands-divider{width:1px;height:24px;background:var(--clr-border);flex-shrink:0;}
+.brands-list{display:flex;align-items:center;gap:0.5rem;flex-shrink:0;}
+.brand-pill{
+  font-family:var(--font-ui);font-size:0.78rem;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;color:var(--clr-text-muted);
+  padding:0.4rem 1rem;border-radius:100px;
+  border:1px solid var(--clr-border);white-space:nowrap;
+  transition:var(--transition);cursor:default;background:var(--clr-bg);
 }
-.brand-pill:hover { color: var(--clr-text); border-color: var(--clr-border-mid); background: var(--clr-bg-raised); }
+.brand-pill:hover{color:var(--clr-primary);border-color:var(--clr-border-mid);background:var(--clr-primary-subtle);}

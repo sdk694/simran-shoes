@@ -1,0 +1,233 @@
+/* ============================================================
+   WA-FORM v6 — WhatsApp Pre-Enquiry Modal
+   Opens before any WhatsApp redirect, collects customer details,
+   then auto-populates the WhatsApp message with full context.
+   ============================================================ */
+
+/* Backdrop */
+.waf-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(26, 14, 16, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 3000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.waf-backdrop.open {
+  opacity: 1; pointer-events: all;
+}
+
+/* Box */
+.waf-box {
+  background: var(--clr-bg-card);
+  border: 1px solid var(--clr-border-mid);
+  border-radius: var(--radius-md);
+  width: 100%; max-width: 480px;
+  max-height: 94vh; overflow-y: auto;
+  position: relative;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(30px) scale(0.97);
+  transition: transform 0.32s var(--ease-spring);
+}
+.waf-backdrop.open .waf-box {
+  transform: translateY(0) scale(1);
+}
+
+/* Close */
+.waf-close {
+  position: absolute; top: 1rem; right: 1rem;
+  width: 32px; height: 32px;
+  background: var(--clr-bg-surface);
+  border: 1px solid var(--clr-border);
+  color: var(--clr-text-muted); border-radius: 50%;
+  cursor: pointer; font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--transition); z-index: 5;
+}
+.waf-close:hover {
+  background: var(--clr-primary); color: #fff; border-color: var(--clr-primary);
+  transform: rotate(90deg);
+}
+
+/* Header band */
+.waf-header {
+  padding: 1.75rem 1.75rem 1.25rem;
+  border-bottom: 1px solid var(--clr-border);
+}
+.waf-header-top {
+  display: flex; align-items: flex-start; gap: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+.waf-wa-icon {
+  width: 42px; height: 42px; border-radius: var(--radius-sm);
+  background: var(--clr-whatsapp);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; color: #fff;
+}
+.waf-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem; letter-spacing: 0.03em;
+  text-transform: uppercase; color: var(--clr-text);
+  line-height: 1.05;
+}
+.waf-subtitle {
+  font-size: 0.82rem; color: var(--clr-text-muted); line-height: 1.6;
+  margin-top: 0.25rem;
+}
+
+/* Product summary chip */
+.waf-product-chip {
+  display: flex; align-items: center; gap: 0.75rem;
+  background: var(--clr-bg-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-xs);
+  padding: 0.65rem 0.875rem;
+  margin-top: 1rem;
+}
+.waf-product-thumb {
+  width: 44px; height: 44px;
+  border-radius: var(--radius-xs);
+  background: var(--clr-bg);
+  overflow: hidden; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+}
+.waf-product-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.waf-product-info { flex: 1; min-width: 0; }
+.waf-product-name {
+  font-family: var(--font-ui); font-size: 0.88rem; font-weight: 700;
+  color: var(--clr-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.waf-product-price {
+  font-family: var(--font-ui); font-size: 0.85rem; font-weight: 800;
+  color: var(--clr-primary); margin-top: 0.1rem;
+}
+
+/* Form body */
+.waf-form { padding: 1.5rem 1.75rem; display: flex; flex-direction: column; gap: 1.1rem; }
+
+.waf-field { display: flex; flex-direction: column; gap: 0.35rem; }
+
+.waf-label {
+  font-family: var(--font-ui); font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--clr-text-muted);
+  display: flex; align-items: center; gap: 0.3rem;
+}
+.waf-label .required { color: var(--clr-primary); }
+
+.waf-input, .waf-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--clr-bg);
+  border: 1.5px solid var(--clr-border);
+  border-radius: var(--radius-xs);
+  font-family: var(--font-body); font-size: 0.9rem;
+  color: var(--clr-text);
+  outline: none;
+  transition: var(--transition);
+  appearance: none; -webkit-appearance: none;
+}
+.waf-input:focus, .waf-select:focus {
+  border-color: var(--clr-primary);
+  box-shadow: 0 0 0 3px var(--clr-primary-glow);
+  background: var(--clr-bg-card);
+}
+.waf-input::placeholder { color: var(--clr-text-dim); }
+.waf-input.error, .waf-select.error {
+  border-color: var(--clr-red);
+  background: var(--clr-error-bg);
+  box-shadow: 0 0 0 3px rgba(220,38,38,0.08);
+}
+
+/* Select wrapper (for custom arrow) */
+.waf-select-wrap { position: relative; }
+.waf-select-wrap::after {
+  content: '▼'; position: absolute; right: 1rem; top: 50%;
+  transform: translateY(-50%); pointer-events: none;
+  font-size: 0.6rem; color: var(--clr-text-dim);
+}
+
+/* Field row (2-col on wider screens) */
+.waf-field-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.875rem;
+}
+
+/* Error message */
+.waf-error-msg {
+  font-size: 0.72rem; color: var(--clr-red);
+  font-family: var(--font-ui); letter-spacing: 0.04em;
+  display: none;
+}
+.waf-error-msg.show { display: block; }
+
+/* Input hint */
+.waf-hint {
+  font-size: 0.68rem; color: var(--clr-text-dim);
+  font-family: var(--font-ui); letter-spacing: 0.04em;
+}
+
+/* Privacy note */
+.waf-privacy {
+  display: flex; align-items: flex-start; gap: 0.5rem;
+  font-size: 0.72rem; color: var(--clr-text-dim); line-height: 1.5;
+  padding-top: 0.25rem;
+}
+.waf-privacy-icon { font-size: 0.9rem; flex-shrink: 0; margin-top: 0.05rem; }
+
+/* Footer actions */
+.waf-actions {
+  padding: 0 1.75rem 1.75rem;
+  display: flex; flex-direction: column; gap: 0.6rem;
+}
+.waf-submit {
+  display: flex; align-items: center; justify-content: center; gap: 0.65rem;
+  width: 100%; padding: 1rem;
+  background: var(--clr-whatsapp); color: #fff;
+  font-family: var(--font-ui); font-weight: 700; font-size: 0.92rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border: none; border-radius: var(--radius-xs);
+  cursor: pointer; transition: var(--transition);
+}
+.waf-submit:hover {
+  background: var(--clr-whatsapp-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+}
+.waf-submit:disabled {
+  opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none;
+}
+.waf-skip {
+  background: none; border: none;
+  font-family: var(--font-ui); font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--clr-text-dim); cursor: pointer;
+  transition: var(--transition); padding: 0.3rem;
+  text-align: center;
+}
+.waf-skip:hover { color: var(--clr-primary); }
+
+/* Success state */
+.waf-success {
+  padding: 3rem 2rem;
+  text-align: center;
+  display: none; flex-direction: column; align-items: center; gap: 1rem;
+}
+.waf-success.show { display: flex; }
+.waf-success-icon { font-size: 3rem; }
+.waf-success-title {
+  font-family: var(--font-display); font-size: 1.8rem;
+  letter-spacing: 0.04em; text-transform: uppercase; color: var(--clr-text);
+}
+.waf-success-msg { font-size: 0.9rem; color: var(--clr-text-muted); line-height: 1.65; }
+
+/* Responsive */
+@media (max-width: 480px) {
+  .waf-field-row { grid-template-columns: 1fr; }
+  .waf-form { padding: 1.25rem; }
+  .waf-actions { padding: 0 1.25rem 1.25rem; }
+  .waf-header { padding: 1.25rem 1.25rem 1rem; }
+  .waf-title { font-size: 1.3rem; }
+}

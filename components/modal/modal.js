@@ -140,8 +140,19 @@ const ModalComponent = (() => {
 
     // WA button
     const waBtn = document.getElementById('modal-wa-btn');
-    waBtn.href = whatsappURL(window._waNumber || '', name, price, sku, 'quick-view');
     waBtn.className = `modal-wa-btn${avail ? '' : ' disabled'}`;
+    // Store product ref for WA form
+    waBtn._product = product;
+    waBtn._imgPath = imgPath;
+    // Remove old listener by cloning
+    const newWaBtn = waBtn.cloneNode(true);
+    waBtn.parentNode.replaceChild(newWaBtn, waBtn);
+    newWaBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (!avail) return;
+      close();
+      setTimeout(() => openWAForm(product, imgPath, window._waNumber || ''), 150);
+    });
 
     // Show
     _backdrop.classList.add('open');
